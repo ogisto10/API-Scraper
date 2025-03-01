@@ -51,11 +51,13 @@ def classify_apis(apis):
     return categories
 
 def save_apis_to_file(website_url, categorized_apis):
-    """Save categorized API endpoints to a file inside a folder named after the website."""
+    """Save categorized API endpoints inside an 'APIs' folder with a subfolder for each website."""
     parsed_url = urlparse(website_url)
-    folder_name = parsed_url.netloc.replace("www.", "")
-    os.makedirs(folder_name, exist_ok=True)
-    file_path = os.path.join(folder_name, "categorized_api_endpoints.txt")
+    site_folder = parsed_url.netloc.replace("www.", "")
+    base_folder = "APIs"
+    os.makedirs(os.path.join(base_folder, site_folder), exist_ok=True)
+    
+    file_path = os.path.join(base_folder, site_folder, "categorized_api_endpoints.txt")
     
     with open(file_path, "w", encoding="utf-8") as file:
         for category, apis in categorized_apis.items():
