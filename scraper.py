@@ -12,7 +12,7 @@ def get_js_links(url):
         soup = BeautifulSoup(response.text, 'html.parser')
         return {urljoin(url, script['src']) for script in soup.find_all('script', src=True)}
     except requests.RequestException as e:
-        print(f"⚠️ Error fetching JavaScript files from {url}: {e}")
+        print(f" Error fetching JavaScript files from {url}: {e}")
         return set()
 
 def extract_api_endpoints(js_url):
@@ -23,7 +23,7 @@ def extract_api_endpoints(js_url):
         api_pattern = re.compile(r'"(https?://[^"\s]+)"')
         return set(api_pattern.findall(response.text))
     except requests.RequestException as e:
-        print(f"⚠️ Error fetching {js_url}: {e}")
+        print(f" Error fetching {js_url}: {e}")
         return set()
 
 def classify_apis(apis):
@@ -64,24 +64,24 @@ def save_apis_to_file(website_url, categorized_apis):
             file.write(f"{category} ({len(apis)}):\n")
             file.write("\n".join(apis) + "\n\n")
             
-        print(f"✅ Saved categorized API endpoints in: {file_path}")
+        print(f" Saved categorized API endpoints in: {file_path}")
 
 def find_apis(website_url):
     """Find and classify API endpoints within a given website."""
-    print(f"🔍 Scanning {website_url} for JavaScript files...")
+    print(f" Scanning {website_url} for JavaScript files...")
     js_links = get_js_links(website_url)
     api_endpoints = set()
     
     for js_link in js_links:
-        print(f"➡️ Checking {js_link}")
+        print(f" Checking {js_link}")
         api_endpoints.update(extract_api_endpoints(js_link))
     
     categorized_apis = classify_apis(api_endpoints)
     save_apis_to_file(website_url, categorized_apis)
 
 if __name__ == "__main__":
-    website = input("🌍 Enter the website URL: ").strip()
+    website = input(" Enter the website URL: ").strip()
     if website:
         find_apis(website)
     else:
-        print("❌ Invalid URL. Please enter a valid website URL.")
+        print(" Invalid URL. Please enter a valid website URL.")

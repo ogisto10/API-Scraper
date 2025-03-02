@@ -53,7 +53,7 @@ def save_links_to_file(file_links, filename):
         for link in file_links:
             file.write(link + "\n")
     
-    logging.info(f"✅ Saved {len(file_links)} URLs to {filename}")
+    logging.info(f" Saved {len(file_links)} URLs to {filename}")
 
 def crawl_website(website_url, filename, max_depth=3, current_depth=0):
     """Crawls a website recursively to find XML & JSON files."""
@@ -84,12 +84,12 @@ def crawl_website(website_url, filename, max_depth=3, current_depth=0):
             crawl_website(link, filename, max_depth, current_depth + 1)
 
 if __name__ == "__main__":
-    website = input("🌍 Enter the website URL: ").strip()
+    website = input(" Enter the website URL: ").strip()
     if website:
         output_file = "extracted_urls.txt"
         with open(output_file, "w"):  # Clear file before starting
             pass
         crawl_website(website, output_file)
-        logging.info(f"🎯 All URLs saved in {output_file}")
+        logging.info(f" All URLs saved in {output_file}")
     else:
-        logging.error("❌ Invalid URL. Please enter a valid website URL.")
+        logging.error(" Invalid URL. Please enter a valid website URL.")

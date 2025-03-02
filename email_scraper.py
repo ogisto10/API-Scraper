@@ -19,20 +19,20 @@ def get_emails_from_website(url):
         
         return emails
     except requests.ConnectionError:
-        print(f"⚠️ Network error: Unable to connect to {url}")
+        print(f" Network error: Unable to connect to {url}")
     except requests.Timeout:
-        print(f"⚠️ Timeout error: {url} took too long to respond")
+        print(f" Timeout error: {url} took too long to respond")
     except requests.HTTPError as e:
-        print(f"⚠️ HTTP error {e.response.status_code} on {url}")
+        print(f" HTTP error {e.response.status_code} on {url}")
     except Exception as e:
-        print(f"⚠️ Unexpected error: {e}")
+        print(f" Unexpected error: {e}")
     
     return set()
 
 def save_emails_to_file(website_url, emails):
     """Save extracted emails inside a 'Mails' folder with a subfolder for each website."""
     if not emails:
-        print("❌ No emails found.")
+        print(" No emails found.")
         return
     
     parsed_url = urlparse(website_url)
@@ -54,22 +54,22 @@ def save_emails_to_file(website_url, emails):
     if new_emails:
         with open(file_path, "a", encoding="utf-8") as file:
             file.write("\n".join(new_emails) + "\n")
-        print(f"✅ {len(new_emails)} new emails saved in: {file_path}")
+        print(f" {len(new_emails)} new emails saved in: {file_path}")
     else:
-        print("📌 No new emails found.")
+        print(" No new emails found.")
 
 def find_emails(website_url):
     """Extract emails from a given website and save them."""
     if not website_url.startswith(("http://", "https://")):
         website_url = "https://" + website_url
     
-    print(f"🔍 Scanning {website_url} for email addresses...")
+    print(f" Scanning {website_url} for email addresses...")
     emails = get_emails_from_website(website_url)
     save_emails_to_file(website_url, emails)
 
 if __name__ == "__main__":
-    website = input("🌍 Enter the website URL: ").strip()
+    website = input(" Enter the website URL: ").strip()
     if website:
         find_emails(website)
     else:
-        print("❌ Invalid URL. Please enter a valid website URL.")
+        print(" Invalid URL. Please enter a valid website URL.")
